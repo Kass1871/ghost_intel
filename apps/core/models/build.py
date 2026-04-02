@@ -59,4 +59,4 @@ class Build(Base):
             f"Exotics: [{exotics}] | "
             f"Weapons: [{weapons}] | "
             f"Views: {self.views}"
-        )
+        )   
