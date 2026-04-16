@@ -1,0 +1,34 @@
+﻿{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Title{% endblock title %}</title>
+    {% block style %}
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+    {% endblock style %}
+</head>
+<body>
+    {# Comment #}
+    {% comment %}
+    Block comment
+    {% endcomment %}
+    <div class="wrapper">
+        <header>
+            {% block header %}
+                {% include "core/includes/header.html" %}
+            {% endblock header %}
+        </header>
+        <main>
+            {% block main %}
+            {% endblock main %}
+        </main>
+        <footer>
+            {% block footer %}
+                {% include "core/includes/footer.html" %}
+            {% endblock footer %}
+        </footer>
+    </div>
+    {% block scripts %}
+    {% endblock scripts %}
+</body>
+</html>

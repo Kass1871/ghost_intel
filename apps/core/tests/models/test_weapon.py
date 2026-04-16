@@ -32,12 +32,12 @@ class WeaponModelTest(TestCase):
         self.assertIsNotNone(updated_weapon)
         self.assertEqual(updated_weapon.name, "Zaouli’s Bane")
 
-    def test_delete_client(self):
+    def test_delete_weapon(self):
         """Testing that the client is being deleted successfully"""
-        client_id = self.weapon.id
+        weapon_id = self.weapon.id
         self.weapon.delete()
         with self.assertRaises(Weapon.DoesNotExist):
-            Weapon.objects.get(id=client_id)
+            Weapon.objects.get(id=weapon_id)
 
     #PostCondition
     #Brings the environment back to its original state
