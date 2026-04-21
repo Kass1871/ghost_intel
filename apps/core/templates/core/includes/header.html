@@ -1,8 +1,15 @@
 ﻿{# <header> #}
 <nav>
+    <div class="logo">
+        <a href="{% url "welcome" %}">
+            <img src="https://i.imgur.com/tWbdJAc.png" alt="logo">
+            <span>Ghost Intel</span>
+        </a>
+    </div>
     <ul class="nav-left">
-        <li><a href="{% url "welcome" %}">Welcome</a></li>
-        <li><a href="/error">Error</a></li>
+        <li><a href="{% url "weapons" %}">Weapons</a></li>
+        <li><a href="{% url "welcome" %}">Builds</a></li>
+        <li><a href="{% url "welcome" %}">News</a></li>
     </ul>
 </nav>
 {# </header #}

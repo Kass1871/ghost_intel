@@ -1,4 +1,174 @@
 ﻿*{
     font-family: Roboto, serif;
+}
+
+html{
     font-size: 20px;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+body::before{
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+
+    background: url("https://i.imgur.com/hzU1k52.jpeg") no-repeat center center fixed;
+    background-size: cover;
+    filter: blur(1px);
+    z-index: -1;
+
+    transform: scale(1.05);
+}
+
+/* HEADER */
+
+header{
+    position: fixed;
+    height: 10vh;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+
+    background-color: #0a043d;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+
+    border-bottom: 4px solid #1b1557;
+}
+
+header ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+header nav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+}
+
+header a{
+    color: white;
+    text-decoration: none;
+}
+
+header li{
+    background-color: #34305f;
+    border-radius: 10%;
+    padding: 0.5rem;
+    width: auto;
+
+    transition: 0.2s ease;
+}
+
+header li:hover{
+    background-color: #51427c;
+    box-shadow: 0 0 0.5rem #575296
+}
+
+.nav-left{
+    width: fit-content;
+}
+
+.logo{
+    margin-left: 2rem;
+    margin-right: 3rem;
+}
+
+.logo img{
+    height: 96px;
+    width: auto;
+    display: block;
+}
+
+.logo a{
+    display: inline-block;
+    line-height: 0;
+    transition: opacity 0.2s ease;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.logo a:hover{
+    opacity: 0.8;
+}
+
+.logo span{
+    font-size: 1.5rem;
+    font-weight: bolder;
+}
+
+/* MAIN */
+
+main{
+    height: 80vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* WELCOME/MAIN PAGE */
+
+.mp-container{
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+}
+
+.mp-text{
+    margin-top: 0;
+    font-weight: bold;
+    font-size: 2rem;
+    color: white
+}
+
+.mp-text span{
+    font-size: 2rem;
+    color: rgb(195, 111, 221)
+}
+
+.mp-wrapper{
+    justify-content: center;
+    align-content: center;
+}
+
+/* Weapons page */
+.wp-wrapper{
+    margin-top: 10vh;
+    justify-content: center;
+}
+
+/* FOOTER */
+footer{
+    height: 10vh;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+
+    background-color: #320c6e;
+    border-top: 4px solid #401386;
+    color: white;
+    font-weight: bolder;
+    font-size: 2vh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
 }
