@@ -1,4 +1,5 @@
 ﻿*{
+    box-sizing: border-box;
     font-family: Roboto, serif;
 }
 
@@ -27,6 +28,7 @@ body::before{
     z-index: -1;
 
     transform: scale(1.05);
+
 }
 
 /* HEADER */
@@ -118,7 +120,9 @@ header li:hover{
 /* MAIN */
 
 main{
-    height: 80vh;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+    height: calc(100vh - 20vh);
     width: 100%;
     display: flex;
     justify-content: center;
@@ -128,7 +132,10 @@ main{
 
 .mp-container{
     display: grid;
-    grid-template-rows: 1fr 2fr;
+    grid-template-columns: repeat(2, 1fr);
+
+    min-width: 60vw;
+    height: auto;
 }
 
 .mp-text{
@@ -144,22 +151,99 @@ main{
 }
 
 .mp-wrapper{
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.card{
+    width: 20rem;
+    height: 15rem;
+    border: solid 4px #4E0780;
+    box-shadow: 0 0 1.5rem #4E0780;
+    overflow: hidden;
+
+    margin: auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.card:hover{
+    box-shadow: 0 0 3.5rem #702da0;
+    border-color: #702da0;
+}
+
+.card:hover img{
+    opacity: 90%;
+}
+
+.card-link{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    z-index: 4;
+}
+
+.card-main{
+    position: relative;
+    z-index: 3;
+    color: white;
+    text-align: center;
+
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.card-main span{
+    color: rgb(195, 111, 221);
+    font-weight: bolder;
+}
+
+.card-link::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+
+    background-color: rgba(112, 45, 160, 40%);
+    pointer-events: none;
+}
+
+.card img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 80%;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    z-index: 1;
 }
 
 /* Weapons page */
 .wp-wrapper{
-    margin-top: 10vh;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* FOOTER */
 footer{
     height: 10vh;
     width: 100%;
-    bottom: 0;
     position: absolute;
+    bottom: 0;
 
     background-color: #320c6e;
     border-top: 4px solid #401386;
@@ -168,7 +252,6 @@ footer{
     font-size: 2vh;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
-}
+} 
