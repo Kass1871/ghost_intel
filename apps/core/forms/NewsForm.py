@@ -6,6 +6,7 @@ class NewsForm(forms.ModelForm):
     class Meta:
         model = News
         exclude = (
+            'anon_edit_token',
             'author',
             'datePublished',
             'dateUpdated'
