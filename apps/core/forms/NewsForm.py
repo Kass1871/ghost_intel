@@ -7,7 +7,6 @@ class NewsForm(forms.ModelForm):
         model = News
         exclude = (
             'author',
-            'views',
             'datePublished',
             'dateUpdated'
         )

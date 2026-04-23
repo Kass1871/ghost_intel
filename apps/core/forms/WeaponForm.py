@@ -6,8 +6,4 @@ from apps.core.models import Weapon
 class WeaponForm(forms.ModelForm):
     class Meta:
         model = Weapon
-        exclude = (
-            'author',
-            'datePublished',
-            'dateUpdated'
-        )
+        fields = '__all__'
