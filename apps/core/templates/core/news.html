@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}News{% endblock title %}
+{% block main %}
+<div class="np-wrapper">
+    <div class="np-container">
+        <form action="{% url "news" %}" method="post">
+            {% csrf_token %}
+            
+            <button type="submit">Save</button>
+        </form>
+    </div>
+    <div class="np-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Desc.</th>
+                <th>Content</th>
+                <th>Category</th>
+                <th>Source</th>
+                <th>Game Breaking?</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for news in news_list %}
+                <tr>
+                    <td class="news-title">{{news.title}}</td>
+                    <td>{{news.description}}</td>
+                    <td>{{news.content}}</td>
+                    <td>{{news.category}}</td>
+                    <td>{{news.source}}</td>
+                    <td>{{news.isGameBreaking}}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3">No news found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+{% endblock main %}
