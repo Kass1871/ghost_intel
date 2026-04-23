@@ -8,6 +8,7 @@ urlpatterns = [
     path('about/', views.about, name='about_project'),
     path('', views.welcome, name='welcome'),
     path("weapons/", views.weapons, name="weapons"),
+    #path('weapons/<int:pk>/delete/', views.weapons.delete_weapon, name="delete_weapon"),
     path("weapons/<int:pk>/", WeaponDetails.as_view(), name="weapon_details"),
     path("builds/", views.builds, name="builds"),
     path("builds/<int:pk>/", BuildDetails.as_view(), name="build_details"),

@@ -116,7 +116,43 @@ header li:hover{
 
 .logo span{
     font-size: 1.5rem;
-    font-weight: bolder;
+    font-weight: bold;
+    font-family: 'League Spartan';
+}
+
+input,
+select,
+button{
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    border: 0;
+    outline: none;
+    background: transparent;
+    box-shadow: none;
+
+    font: inherit;
+    color: inherit;
+}
+
+input{
+    color: white;
+    background-color: #855ca3;
+    border: solid 1px #702DA0;
+}
+
+select{
+    color: white;
+    background-color: #6c448a;
+    border: solid 1px #702DA0;
+}
+
+button{
+    color: white;
+    background-color: #6c448a;
+    border: solid 1px #702DA0;
+    border-radius: 2%;
 }
 
 /* MAIN */
@@ -238,6 +274,121 @@ main{
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    gap: 2rem;
+}
+
+.wp-container{
+    padding: 1rem;
+    box-shadow: 0 0 1rem #4E0780;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #3d1177;
+}
+
+.wp-container form{
+    margin: 0;
+}
+
+table{
+    width: 80vw;
+}
+
+table tr{
+    height: 30px;
+}
+
+thead{
+    color: white;
+    background-color: #855ca3;
+    border: solid 1px #702DA0;
+}
+
+td{
+    text-align: center;
+}
+
+th, td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.btn.details{
+    color: #7d42b4;
+    background-color: #462664;
+    padding: 2px;
+    text-decoration: none;
+    border: solid 1px #8c50c5;
+    border-radius: 5%;
+}
+
+.btn.delete{
+    color: #b44242;
+    background-color: #642626;
+    padding: 2px;
+    text-decoration: none;
+    border: solid 1px #c55050;
+    border-radius: 5%;
+}
+
+.weapon-name{
+    color: white;
+    font-style: italic;
+    text-transform: capitalize;
+}
+
+.weapon-type{
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    text-transform: capitalize;
+}
+
+.type-icon{
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.weapon-type.primary {
+  color: white;
+}
+
+.weapon-type.heavy {
+  color: #B286FF;
+}
+
+.weapon-type.special {
+  color: #7AF48B;
+}
+
+/* NEWS */
+.np-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 2rem;
+}
+
+.np-container{
+    padding: 1rem;
+    box-shadow: 0 0 1rem #4E0780;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #3d1177;
+}
+
+.np-container form{
+    margin: 0;
 }
 
 /* FOOTER */

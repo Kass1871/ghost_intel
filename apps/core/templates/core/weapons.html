@@ -3,7 +3,7 @@
 {% block title %}Weapons{% endblock title %}
 {% block main %}
 <div class="wp-wrapper">
-    <div class="container">
+    <div class="wp-container">
         <form action="{% url "weapons" %}" method="post">
             {% csrf_token %}
             <input type="text" name="name" placeholder="Weapon name" value={{data.name}}>
@@ -16,24 +16,43 @@
             <button type="submit">Save</button>
         </form>
     </div>
-    <div class="container">
-        <table>
+    <div class="wp-container">
+    <table>
+        <thead>
             <tr>
-                <thead>
-                    <tr>Title</tr>
-                    <tr>Type</tr>
-                </thead>
-                <tbody>
-                    {% for weapon in weapon_list %}
-                        <tr>
-                            <td>{{weapon.name}}</td>
-                            <td>{{weapon.weapon_type}}</td>
-                            <td><a href="{% url "weapon_details" weapon.id %}">Details</a></td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Type</th>
+                <th></th>
             </tr>
-        </table>
-    </div>
+        </thead>
+        <tbody>
+            {% for weapon in weapon_list %}
+                <tr>
+                    <td>TBA</td>
+                    <td class="weapon-name">
+                        {{ weapon.name }}
+                    </td>
+                    <td class="weapon-type {{weapon.weapon_type|lower}}">
+                        <img 
+                            src="{% static 'images/types/'|add:weapon.weapon_type|lower|add:'.png' %}" 
+                            alt="{{ weapon.weapon_type }}" 
+                            class="type-icon"
+                        >
+                        {{ weapon.weapon_type }}
+                    </td>
+                    <td class="actions">
+                        <a class="btn details" href="{% url "weapon_details" weapon.id %}">Details</a>
+                        <a class="btn delete" href="{% url "weapon_details" weapon.id %}">Delete</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3">No weapons found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 </div>
 {% endblock main %}
