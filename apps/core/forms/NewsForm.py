@@ -1,13 +1,13 @@
 ﻿from django import forms
 
-from apps.core.models import Weapon
+from apps.core.models import News
 
-
-class WeaponForm(forms.ModelForm):
+class NewsForm(forms.ModelForm):
     class Meta:
-        model = Weapon
+        model = News
         exclude = (
             'author',
+            'views',
             'datePublished',
             'dateUpdated'
         )

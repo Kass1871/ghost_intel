@@ -10,6 +10,7 @@ class News(Base):
         ('weekly', 'Weekly Reset'),
     ]
 
+    anon_edit_token = models.UUIDField(null=True, blank=True, editable=False, unique=True)
     category = models.CharField(max_length=30, choices=CATEGORY_CHOICES, blank=True)
     source = models.CharField(max_length=100, blank=True)
     isGameBreaking = models.BooleanField(default=False)

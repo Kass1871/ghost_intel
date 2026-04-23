@@ -1,4 +1,6 @@
-﻿from django.contrib.auth.models import User
+﻿import uuid
+
+from django.contrib.auth.models import User
 from django.db import models
 from .base import Base
 
@@ -31,14 +33,15 @@ class Build(Base):
         ('advanced', 'Advanced'),
     ]
 
+    anon_edit_token = models.UUIDField(null=True, blank=True, editable=False, unique=True)
     build_class = models.CharField(max_length=20, choices=CLASSES, blank=False)
     subclass = models.CharField(max_length=20, choices=SUBCLASSES, blank=False)
     build_type = models.CharField(max_length=20, choices=BUILD_TYPES, blank=False)
     difficulty = models.CharField(max_length=20, choices=DIFFICULTY_CHOICES)
     exotics = models.ManyToManyField('Exotic', blank=True)
     weapons = models.ManyToManyField('Weapon', blank=True)
-    armorMods = models.JSONField(blank=True, null=True)
-    statsPriority = models.JSONField(blank=True, null=True)
+    armorMods = models.JSONField(null=True, blank=True)
+    statsPriority = models.CharField(max_length=50, blank=True)
     expansion = models.CharField(max_length=50)
     likes = models.ManyToManyField(User, related_name='liked_builds', blank=True)
     views = models.PositiveIntegerField(default=0)

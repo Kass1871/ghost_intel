@@ -11,6 +11,8 @@ body {
     min-height: 100vh;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 body::before{
@@ -120,10 +122,10 @@ header li:hover{
 /* MAIN */
 
 main{
-    margin-top: 10vh;
-    margin-bottom: 10vh;
-    height: calc(100vh - 20vh);
+    flex: 1;
+    height: auto;
     width: 100%;
+    margin-top: 10vh;
     display: flex;
     justify-content: center;
 }
@@ -242,8 +244,8 @@ main{
 footer{
     height: 10vh;
     width: 100%;
-    position: absolute;
-    bottom: 0;
+    position: relative;
+    margin-top: auto;
 
     background-color: #320c6e;
     border-top: 4px solid #401386;
