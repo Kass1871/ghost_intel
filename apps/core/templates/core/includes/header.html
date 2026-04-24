@@ -11,5 +11,22 @@
         <li><a href="{% url "builds" %}">Builds</a></li>
         <li><a href="{% url "news" %}">News</a></li>
     </ul>
+    <ul class="nav-right">
+    {% if request.user.is_authenticated %}
+        {% if request.user.is_staff %}
+            <li><a href="{% url 'admin:index' %}">Admin</a></li>
+        {% endif %}
+        <li>
+            <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+        </li>
+    {% else %}
+        <li><a href="{% url 'register' %}">Register</a></li>
+        <li><a href="{% url 'login' %}">Login</a></li>
+    {% endif %}
+</ul>
+
 </nav>
 {# </header #}

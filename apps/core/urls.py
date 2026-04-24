@@ -13,5 +13,7 @@ urlpatterns = [
     path("builds/", views.builds, name="builds"),
     path("builds/<int:pk>/", BuildDetails.as_view(), name="build_details"),
     path("news/", views.news, name="news"),
-    path("news/<int:pk>/", NewsDetails.as_view(), name="news_details")
+    path("news/<int:pk>/", NewsDetails.as_view(), name="news_details"),
+
+    path('accounts/register/', views.register, name='register')
 ]

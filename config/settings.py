@@ -147,3 +147,6 @@ STATICFILES_DIRS = [
 #Authomatically for all models
 #id = models.BigAutoField(primary_key=True)
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = 'welcome'
+LOGIN_URL = 'login'

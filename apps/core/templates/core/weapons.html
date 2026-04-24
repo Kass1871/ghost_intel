@@ -3,10 +3,11 @@
 {% block title %}Weapons{% endblock title %}
 {% block main %}
 <div class="wp-wrapper">
+    {% if request.user.is_staff %}
     <div class="wp-container">
         <form action="{% url "weapons" %}" method="post">
             {% csrf_token %}
-            <input type="text" name="name" placeholder="Weapon name" value={{data.name}}>
+            <input type="text" name="name" placeholder="Weapon name" value={{data.name|default:''}}>
             <select name="weapon_type" id="type">
                 <option value="" selected disabled>--Weapon Type--</option>
                 {% for value, label in weapon_types %}
@@ -16,6 +17,7 @@
             <button type="submit">Save</button>
         </form>
     </div>
+    {% endif %}
     <div class="wp-container">
     <table>
         <thead>

@@ -67,6 +67,17 @@ header nav{
     margin: 0;
 }
 
+.nav-left,
+.nav-right{
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.nav-right{
+    margin-left: auto;
+}
+
 header a{
     color: white;
     text-decoration: none;
@@ -87,6 +98,10 @@ header li:hover{
 }
 
 .nav-left{
+    width: fit-content;
+}
+
+.nav-right{
     width: fit-content;
 }
 
@@ -154,6 +169,89 @@ button{
     border: solid 1px #702DA0;
     border-radius: 2%;
 }
+
+/* Registration */
+.user{
+    display:flex;
+    flex-direction:column;
+    gap:0.5rem;
+    min-width:320px;
+}
+
+.user label {
+    color: white;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+    display: block;
+}
+
+.user div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.logout-container h2, .login-container h2, .register-container h2{
+    color:white;
+    margin:0 0 0.75rem 0;
+}
+
+.logout-container p{
+    color:white;
+    margin:0 0 1rem 0;
+}
+
+.login-wrapper, .logout-wrapper, .register-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin: auto;
+}
+
+.login-container, .logout-container, .register-container{
+    padding: 1rem;
+    box-shadow: 0 0 1rem #720780;
+    border: 1px solid #720780;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #411177;
+}
+
+.login-container form{
+    margin: 0;
+}
+
+.errorlist {
+    list-style: none;
+    margin: 0.25rem 0 0.5rem 0;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #c55050;
+    background-color: #642626;
+    color: #ffd5d5;
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+.errorlist li{
+    margin: 0;
+    padding: 0;
+}
+
+.user .errorlist.nonfield {
+    margin-bottom: 0.75rem;
+}
+
+.field-error input,
+.field-error select,
+.field-error textarea {
+    border: 1px solid #c55050 !important;
+    box-shadow: 0 0 0.35rem rgba(197, 80, 80, 0.6);
+}
+
 
 /* MAIN */
 
@@ -270,7 +368,7 @@ main{
 }
 
 /* Weapons page */
-.wp-wrapper{
+.wp-wrapper, .np-wrapper{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -278,7 +376,7 @@ main{
     gap: 2rem;
 }
 
-.wp-container{
+.wp-container, .np-container{
     padding: 1rem;
     box-shadow: 0 0 1rem #4E0780;
 
@@ -368,27 +466,18 @@ th, td {
 }
 
 /* NEWS */
-.np-wrapper{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    gap: 2rem;
-}
-
-.np-container{
-    padding: 1rem;
-    box-shadow: 0 0 1rem #4E0780;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #3d1177;
-}
-
 .np-container form{
     margin: 0;
+}
+
+.no-news{
+    margin: 0.25rem 0 0.5rem 0;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #c55050;
+    background-color: #642626;
+    color: #ffd5d5;
+    border-radius: 6px;
+    font-size: 1.25rem;
 }
 
 /* FOOTER */
