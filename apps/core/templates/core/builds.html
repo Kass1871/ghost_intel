@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Welcome{% endblock title %}
+{% block main %}
+    <div class="bp-wrapper">
+        {% if request.user.is_staff %}
+        <div class="bp-container">
+            <form action="{% url "builds" %}" method="post">
+                {% csrf_token %}
+                <div class="bp-row bp-row-1">
+                    <input type="text" name="title" placeholder="Title" required>
+                    <input type="text" name="slug" placeholder="Slug" required>
+                    <textarea name="description" placeholder="Description" required></textarea>
+                    <textarea name="content" placeholder="Content" required></textarea>
+                </div>
+
+                <div class="bp-row bp-row-2">
+                    <select name="build_class" required>
+                        <option value="" disabled selected>--Class--</option>
+                        {% for value, label in build_class %}
+                            <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <select name="subclass" required>
+                        <option value="" disabled selected>--Subclass--</option>
+                        {% for value, label in subclass %}
+                            <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <select name="build_type" required>
+                        <option value="" disabled selected>--Type--</option>
+                        {% for value, label in build_type %}
+                            <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <select name="difficulty" required>
+                        <option value="" disabled selected>--Difficulty--</option>
+                        {% for value, label in difficulty %}
+                            <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <input type="text" name="statsPriority" placeholder="Stats Priority">
+                    <input type="text" name="expansion" placeholder="Expansion">
+                </div>
+
+                <div class="bp-row bp-row-3">
+                    <h4>Armor Mods</h4>
+                    <div class="bp-armor-grid">
+                        <input type="text" name="armor_helmet" placeholder="Helmet mods">
+                        <input type="text" name="armor_arms" placeholder="Arms mods">
+                        <input type="text" name="armor_chest" placeholder="Chest mods">
+                        <input type="text" name="armor_legs" placeholder="Legs mods">
+                        <input type="text" name="armor_class_item" placeholder="Class item mods">
+                    </div>
+                </div>
+
+                <button type="submit">Save</button>
+            </form>
+        </div>
+        {% if errors %}
+            <div class="errorlist">
+                {% for field, field_errors in errors.items %}
+                <div><strong>{{ field }}:</strong> {{ field_errors|join:", " }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% endif %}
+        <div class="bp-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Class</th>
+                    <th>Subclass</th>
+                    <th>Type</th>
+                    <th>Difficulty</th>
+                    <th>Expansion</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for build in build_list %}
+                    <td>{{build.title}}</td>
+                    <td>{{build.build_class}}</td>
+                    <td>{{build.subclass}}</td>
+                    <td>{{build.build_type}}</td>
+                    <td>{{build.difficulty}}</td>
+                    <td>{{build.expansion}}</td>
+                    <td class="actions">
+                        <a class="btn details" href="{% url 'build_details' build.id %}">Details</a>
+                    </td>
+                {% empty %}
+                    <tr>
+                        <td class="no-news" colspan="7">No builds found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+{% endblock main %}

@@ -5,15 +5,23 @@
 <div class="wp-wrapper">
     {% if request.user.is_staff %}
     <div class="wp-container">
-        <form action="{% url "weapons" %}" method="post">
+        <form action="{% url "weapons" %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <input type="text" name="name" placeholder="Weapon name" value={{data.name|default:''}}>
+            <input type="file" name="thumbnail" accept="image/*">
+            <input type="text" name="name" placeholder="Weapon name" value="{{data.name|default:''}}">
+            <select name="weapon_rarity" id="rarity">
+                <option value="" selected disabled>--Rarity--</option>
+                {% for value, label in weapon_rarities %}
+                    <option value="{{value}}">{{label}}</option>
+                {% endfor %}
+            </select>
             <select name="weapon_type" id="type">
                 <option value="" selected disabled>--Weapon Type--</option>
                 {% for value, label in weapon_types %}
                     <option value="{{value}}">{{label}}</option>
                 {% endfor %}
             </select>
+            <textarea name="description" placeholder="Description of the weapon" ></textarea>
             <button type="submit">Save</button>
         </form>
     </div>
@@ -24,16 +32,26 @@
             <tr>
                 <th>Image</th>
                 <th>Title</th>
+                <th>Rarity</th>
                 <th>Type</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             {% for weapon in weapon_list %}
-                <tr>
-                    <td>TBA</td>
+                <tr class="wp-row">
+                    <td class="table-wp-image">
+                        {% if weapon.thumbnail %}
+                            <img src="{{weapon.thumbnail.url}}" alt="{{ weapon.name }}">
+                        {% else %}
+                            TBA
+                        {% endif %}
+                    </td>
                     <td class="weapon-name">
                         {{ weapon.name }}
+                    </td>
+                    <td class="weapon-rarity {{weapon.weapon_rarity|lower}}">
+                        {{ weapon.weapon_rarity }}
                     </td>
                     <td class="weapon-type {{weapon.weapon_type|lower}}">
                         <img 
@@ -45,12 +63,16 @@
                     </td>
                     <td class="actions">
                         <a class="btn details" href="{% url "weapon_details" weapon.id %}">Details</a>
-                        <a class="btn delete" href="{% url "weapon_details" weapon.id %}">Delete</a>
+                        <form method="post" action="{% url "weapon_details" weapon.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="delete" value="true">
+                            <button type="submit" class="btn delete">Delete</button>
+                        </form>
                     </td>
                 </tr>
             {% empty %}
                 <tr>
-                    <td colspan="3">No weapons found.</td>
+                    <td class="no-news" colspan="5">No weapons found.</td>
                 </tr>
             {% endfor %}
         </tbody>

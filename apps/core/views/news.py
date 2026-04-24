@@ -15,14 +15,17 @@ def news_view(request):
             return redirect('news')
         data = {
             'title': request.POST.get('title'),
+            'slug': request.POST.get('slug'),
             'description': request.POST.get('description'),
             'content': request.POST.get('content'),
             'category': request.POST.get('category'),
             'source': request.POST.get('source'),
-            'isGameBreaking': request.POST.get('isGameBreaking'),
+            'isGameBreaking': request.POST.get('isGameBreaking') == 'on',
+            'status': request.POST.get('status') or 'draft',
         }
         try:
             news = News(**data)
+            news.author = request.user
             news.full_clean()
             news.save()
             
@@ -44,27 +47,34 @@ def news_view(request):
 class NewsDetails(View):
     def get(self, request, pk):
         news = get_object_or_404(News, pk=pk)
-        if request.user.is_staff:
-            news_form = NewsForm(instance=news)
-            return render(request,
-                          'core/news_details.html',
-                          {'news_form': news_form,
-                           'news': news}
-                        )
-        return redirect('news')
+        news_form = NewsForm(instance=news)
+
+        can_edit = request.user.is_staff
+        if not can_edit:
+            for field in news_form.fields.values():
+                field.disabled = True
+        return render(request,
+                    'core/news_details.html',
+                    {'news_form': news_form,
+                    'news': news,
+                     'can_edit': can_edit}
+                )
 
     def post(self, request, pk):
         news = get_object_or_404(News, pk=pk)
 
         if not request.user.is_staff:
-            return (redirect('news'))
+            return (redirect('news_details', pk=news.pk))
+
+        if request.POST.get('delete'):
+            news.delete()
+            return redirect('news')
 
         news_form = NewsForm(request.POST, instance=news)
         if news_form.is_valid():
-            news = news_form.save(commit=False)
-            news.save()
-            news_form.save_m2m()
+            news = news_form.save()
             return redirect('news_details', pk=news.pk)
+
         return render(request,
                       'core/news_details.html',
                       {"news_form": news_form,

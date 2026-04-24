@@ -2,17 +2,44 @@
 {% load static %}
 {% block title %}Weapon Details{% endblock title %}
 {% block main %}
-    <div class="container">
-        <form method="post">
-            <table>
+    <div class="wp-dets-container">
+        <form method="post" enctype="multipart/form-data">
+            <div>
                 {% csrf_token %}
                 {{weapon_form.non_field_errors}}
-                {{weapon_form.as_table}}
-                <tr>
-                    <th></th>
-                    <td><button type="submit" name="submit_weapon">Save</button></td>
-                </tr>
-            </table>
+            </div>
+            <div class="wp-dets-left">
+                <div class="wp-dets-left-img">
+                    {% if weapon.thumbnail %}
+                        <img src="{{weapon.thumbnail.url}}" alt="{{ weapon.name }}">
+                    {% else %}
+                        TBA
+                    {% endif %}
+                </div>
+                <input class="detail-type" id="name" type="text" name="name" value="{{weapon.name}}" {% if not can_edit %}readonly{% endif %}>
+            </div>
+            <div class="wp-dets-right">
+                <label for="rarity">Rarity</label>
+                <select name="weapon_rarity" id="weapon_rarity" {% if not can_edit %}disabled{% endif %}>
+                    {% for value, label in weapon.WEAPON_RARITIES %}
+                        <option value="{{value}}" {% if weapon.weapon_rarity == value %}selected{% endif %}>{{label}}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="weapon_type">Type</label>
+                <select name="weapon_type" id="weapon_type" {% if not can_edit %}disabled{% endif %}>
+                    {% for value, label in weapon.WEAPON_TYPES %}
+                        <option value="{{value}}" {% if weapon.weapon_type == value %}selected{% endif %}>{{label}}</option>
+                    {% endfor %}
+                </select>   
+
+                <label for="description">Description</label>
+                <textarea name="description" id="description" {% if not can_edit %}readonly{% endif %}>{{weapon.description}}</textarea>
+
+                {% if can_edit %}
+                    <button type="submit" name="submit_weapon">Save</button>
+                {% endif %}
+            </div>
         </form>
     </div>
 {% endblock main %}

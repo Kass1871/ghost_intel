@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}News Details{% endblock title %}
+
+{% block main %}
+<div class="np-wrapper">
+    <div class="np-container">
+        <div class="np-dets-container">
+            <form method="post">
+                {% csrf_token %}
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                {{ news_form.non_field_errors }}
+
+                                {% for field in news_form %}
+                                    <div class="news-field">
+                                        {{ field.label_tag }}
+                                        {{ field }}
+                                        {{ field.errors }}
+                                    </div>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="actions">
+                                {% if can_edit %}
+                                    <button type="submit" name="save">Save</button>
+                                    <button type="submit" name="delete" value="true" class="btn delete">Delete</button>
+                                {% else %}
+                                    <button type="button" disabled>Readonly</button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock main %}

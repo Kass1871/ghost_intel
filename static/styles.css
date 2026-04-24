@@ -137,7 +137,8 @@ header li:hover{
 
 input,
 select,
-button{
+button,
+textarea{
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -151,10 +152,15 @@ button{
     color: inherit;
 }
 
-input{
+input, textarea{
     color: white;
     background-color: #855ca3;
     border: solid 1px #702DA0;
+}
+
+textarea{
+    resize: none;
+    height: 2rem;
 }
 
 select{
@@ -387,8 +393,12 @@ main{
     background-color: #3d1177;
 }
 
-.wp-container form{
+.wp-container form, .np-container form, .bp-container form{
     margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 table{
@@ -439,12 +449,45 @@ th, td {
 }
 
 .weapon-type{
+    height:100%;
     font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.25rem;
     text-transform: capitalize;
+}
+
+.weapon-rarity{
+    height: 100%;
+    font-weight: bold;
+    color: black;
+    text-transform: capitalize;
+}
+
+.weapon-rarity.common{
+    color: #C2BBB4;
+}
+
+.weapon-rarity.uncommon{
+    color: #356E41;
+}
+
+.weapon-rarity.rare{
+    color: #5076A3;
+}
+
+.weapon-rarity.legendary{
+    color: #512E64;
+}
+
+.weapon-rarity.exotic{
+    color: #CDAE33;
+}
+
+.table-wp-image img{
+    width: 48px;
+    height: 48px;
 }
 
 .type-icon{
@@ -465,9 +508,122 @@ th, td {
   color: #7AF48B;
 }
 
+.wp-dets-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.wp-dets-container form{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.wp-dets-left{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    gap: 1rem;
+    width: 35%;
+
+    padding: 1rem;
+    background-color: #411177;
+    border: 1px solid #720780;
+    box-shadow: 0 0 1rem #720780;
+    border-radius: 10px;
+}
+
+.wp-dets-left input{
+    height: 3rem;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    min-width: 50%;
+    border-radius: 1rem;
+}
+
+.wp-dets-left-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.wp-dets-left-img{
+    height: 128px;
+    width: 128px;
+    position: relative;
+    overflow: hidden;
+    border: solid 2px rgb(255, 115, 0);
+}
+
+.wp-dets-left-img::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    box-shadow: inset 0px 0px 20px rgb(255, 115, 0);
+}
+
+.wp-dets-right{
+    width: 65%;
+    padding: 1rem;
+    background-color: #411177;
+    border: 1px solid #720780;
+    box-shadow: 0 0 1rem #720780;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.wp-dets-right input, .wp-dets-right select, .wp-dets-right textarea{
+    border-radius: 1rem;
+    text-align: center;
+}
+
+.wp-dets-right label{
+    color: white;
+    text-align: center;
+}
+
+.wp-dets-right textarea{
+    height: 30%;
+    font-style: italic;
+    text-align: center;
+    padding: 8% 0 5% 0;
+}
+
 /* NEWS */
 .np-container form{
     margin: 0;
+}
+
+.np-container table td{
+    color: white;
+    font-weight: bold;
+}
+
+.np-container input[type=checkbox]{
+    height: 16px;
+    width: 16px;
+    border-radius: 100%;
+    background-color: #411177;
+}
+
+.np-container input[type=checkbox]:checked{
+    background-color: orange;
+}
+
+.np-container label{
+    display: flex;
+    text-align: center;
+    gap: 5px;
+    color: white;
 }
 
 .no-news{
@@ -479,6 +635,105 @@ th, td {
     border-radius: 6px;
     font-size: 1.25rem;
 }
+
+.np-dets-container {
+    width: 100%;
+}
+
+.np-dets-container table {
+    width: 100%;
+}
+
+.news-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
+}
+
+.news-field label {
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+/* BUILDS */
+
+.bp-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    margin: 0;
+    gap: 2rem;
+}
+
+.bp-container{
+    padding: 1rem;
+    box-shadow: 0 0 1rem #4E0780;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #3d1177;
+}
+
+.bp-container form{
+    display: grid;
+}
+
+.bp-form {
+    display: grid;
+    gap: 1rem;
+    width: min(1200px, 90vw);
+}
+
+.bp-row {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.bp-row-1 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.bp-row-1 input, .bp-row-1 textarea{
+    height: 3rem;
+}
+
+.bp-row-2 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.bp-row-3 {
+    grid-template-columns: 1fr;
+}
+
+.bp-row-3 h4 {
+    color: white;
+    font-weight: bold;
+}
+
+.bp-armor-grid {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+@media (max-width: 1100px) {
+    .bp-row-1 { grid-template-columns: repeat(2, 1fr); }
+    .bp-row-2 { grid-template-columns: repeat(3, 1fr); }
+    .bp-armor-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+    .bp-row-1,
+    .bp-row-2,
+    .bp-armor-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 
 /* FOOTER */
 footer{

@@ -16,8 +16,7 @@ class Base(models.Model):
     datePublished = models.DateTimeField(auto_now_add=True)
     dateUpdated = models.DateTimeField(auto_now=True)
     tags = models.ManyToManyField('Tag', blank=True)
-    #thumbnail = models.ImageField(upload_to='thumbnails/', blank=True, null=True)
-    status = models.CharField(max_length=20, choices=STATUSES, default='Draft')
+    status = models.CharField(max_length=20, choices=STATUSES, default='draft')
 
     class Meta:
         abstract = True

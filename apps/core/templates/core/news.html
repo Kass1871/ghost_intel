@@ -7,9 +7,32 @@
     <div class="np-container">
         <form action="{% url "news" %}" method="post">
             {% csrf_token %}
-            
+            <input type="text" name="title" placeholder="Title" required>
+            <input type="text" name="slug" placeholder="Slug" required>
+            <textarea name="description" placeholder="Description" required></textarea>
+            <textarea name="content" placeholder="Content" required></textarea>
+            <select name="category" required>
+                <option value="" disabled selected>--Category--</option>
+                {% for value, label in category_choices %}
+                    <option value="{{value}}">{{label}}</option>
+                {% endfor %}
+            </select>
+            <input type="text" name="source" placeholder="Source">
+            <label>Game Breaking? <input type="checkbox" name="isGameBreaking"></label>
+            <select name="status" required>
+                <option value="draft">Draft</option>
+                <option value="published">Published</option>
+                <option value="archived">Archived</option>
+            </select>
             <button type="submit">Save</button>
         </form>
+        {% if errors %}
+            <div class="errorlist">
+                {% for field, field_errors in errors.items %}
+                <div><strong>{{ field }}:</strong> {{ field_errors|join:", " }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
     {% endif %}
     <div class="np-container">
@@ -22,6 +45,7 @@
                 <th>Category</th>
                 <th>Source</th>
                 <th>Game Breaking?</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +57,14 @@
                     <td>{{news.category}}</td>
                     <td>{{news.source}}</td>
                     <td>{{news.isGameBreaking}}</td>
+                    <td>
+                        <a class="btn details" href="{% url "news_details" news.id %}">Details</a>
+                        <form method="post" action="{% url "news_details" news.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="delete" value="true">
+                            <button type="submit" class="btn delete">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             {% empty %}
                 <tr>
