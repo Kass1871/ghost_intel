@@ -84,20 +84,27 @@
             </thead>
             <tbody>
                 {% for build in build_list %}
-                    <td>{{build.title}}</td>
-                    <td>{{build.build_class}}</td>
-                    <td>{{build.subclass}}</td>
-                    <td>{{build.build_type}}</td>
-                    <td>{{build.difficulty}}</td>
-                    <td>{{build.expansion}}</td>
-                    <td class="actions">
+                <tr>
+                    <td class="build-title">{{build.title}}</td>
+                    <td class="build-class">{{build.build_class}}</td>
+                    <td class="build-subclass {{build.subclass|lower}}">{{build.subclass}}</td>
+                    <td class="build-type">{{build.build_type}}</td>
+                    <td class="build-difficulty">{{build.difficulty}}</td>
+                    <td class="build-expansion">{{build.expansion}}</td>
+                    <td class="build-actions">
                         <a class="btn details" href="{% url 'build_details' build.id %}">Details</a>
+                        <form method="post" action="{% url "build_details" build.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="delete" value="true">
+                            <button type="submit" class="btn delete">Delete</button>
+                        </form>
                     </td>
                 {% empty %}
                     <tr>
                         <td class="no-news" colspan="7">No builds found.</td>
                     </tr>
                 {% endfor %}
+                </tr>
             </tbody>
         </table>
     </div>

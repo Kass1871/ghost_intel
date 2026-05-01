@@ -3,6 +3,10 @@
     font-family: Roboto, serif;
 }
 
+html, body, main{
+    min-height: 100%;
+}
+
 html{
     font-size: 20px;
 }
@@ -197,7 +201,9 @@ button{
     justify-content: center;
 }
 
-.logout-container h2, .login-container h2, .register-container h2{
+.logout-container h2,
+.login-container h2,
+.register-container h2{
     color:white;
     margin:0 0 0.75rem 0;
 }
@@ -207,7 +213,9 @@ button{
     margin:0 0 1rem 0;
 }
 
-.login-wrapper, .logout-wrapper, .register-wrapper{
+.login-wrapper,
+.logout-wrapper,
+.register-wrapper{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -215,7 +223,9 @@ button{
     margin: auto;
 }
 
-.login-container, .logout-container, .register-container{
+.login-container,
+.logout-container,
+.register-container{
     padding: 1rem;
     box-shadow: 0 0 1rem #720780;
     border: 1px solid #720780;
@@ -264,6 +274,7 @@ button{
 main{
     flex: 1;
     height: auto;
+    min-height: calc(100vh - 20vh);
     width: 100%;
     margin-top: 10vh;
     display: flex;
@@ -378,11 +389,12 @@ main{
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 
     gap: 2rem;
 }
 
-.wp-container, .np-container{
+.wp-container{
     padding: 1rem;
     box-shadow: 0 0 1rem #4E0780;
 
@@ -393,12 +405,13 @@ main{
     background-color: #3d1177;
 }
 
-.wp-container form, .np-container form, .bp-container form{
+.wp-container form{
     margin: 0;
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 0.5rem;
+    width: 100%;
 }
 
 table{
@@ -508,10 +521,14 @@ th, td {
   color: #7AF48B;
 }
 
-.wp-dets-container{
+.wp-dets-container,
+.bp-dets-container{
     width: 100%;
     display: flex;
     flex-direction: row;
+    height: auto;
+    align-items: stretch;
+    margin: 1rem 0 1rem 0;
 }
 
 .wp-dets-container form{
@@ -521,7 +538,8 @@ th, td {
     gap: 1rem;
 }
 
-.wp-dets-left{
+
+.wp-dets-left, .build-dets-left{
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -536,7 +554,7 @@ th, td {
     border-radius: 10px;
 }
 
-.wp-dets-left input{
+.wp-dets-left input, .build-dets-left input{
     height: 3rem;
     text-align: center;
     font-size: 1rem;
@@ -568,8 +586,8 @@ th, td {
     box-shadow: inset 0px 0px 20px rgb(255, 115, 0);
 }
 
-.wp-dets-right{
-    width: 65%;
+.wp-dets-right, .build-dets-right{
+    width: 62%;
     padding: 1rem;
     background-color: #411177;
     border: 1px solid #720780;
@@ -581,17 +599,27 @@ th, td {
     gap: 0.5rem;
 }
 
-.wp-dets-right input, .wp-dets-right select, .wp-dets-right textarea{
+.wp-dets-right input, .wp-dets-right select, .wp-dets-right textarea, .build-dets-right input, .build-dets-right select, .build-dets-left textarea{
     border-radius: 1rem;
     text-align: center;
 }
 
-.wp-dets-right label{
+.wp-dets-right button, .build-dets-right button{
+    margin-top: auto;
+}
+
+.wp-dets-right label,
+.build-dets-right label{
     color: white;
     text-align: center;
 }
 
-.wp-dets-right textarea{
+.details-header{
+    color: white;
+    text-align: center;
+}
+
+.wp-dets-right textarea, .build-dets-left textarea{
     height: 30%;
     font-style: italic;
     text-align: center;
@@ -599,8 +627,25 @@ th, td {
 }
 
 /* NEWS */
+.np-container{
+    padding: 1rem;
+    box-shadow: 0 0 1rem #4E0780;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #3d1177;
+    margin-top: 1rem;
+}
+
 .np-container form{
     margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
 }
 
 .np-container table td{
@@ -608,15 +653,19 @@ th, td {
     font-weight: bold;
 }
 
-.np-container input[type=checkbox]{
+.np-container input[type=checkbox], .np-dets-container input[type=checkbox]{
     height: 16px;
     width: 16px;
     border-radius: 100%;
     background-color: #411177;
 }
 
-.np-container input[type=checkbox]:checked{
+.np-container input[type=checkbox]:checked, .np-dets-container input[type=checkbox]:checked{
     background-color: orange;
+}
+
+.np-dets-container input[type=checkbox]{
+    align-self: center;
 }
 
 .np-container label{
@@ -637,14 +686,19 @@ th, td {
 }
 
 .np-dets-container {
+    padding: 1rem;
+    margin: 1rem 0 1rem 0;
+    background-color: #411177;
+    border: 1px solid #720780;
+    box-shadow: 0 0 1rem #720780;
+    border-radius: 10px;
+}
+
+.np-dets-main{
     width: 100%;
 }
 
-.np-dets-container table {
-    width: 100%;
-}
-
-.news-field {
+.news-field{
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
@@ -679,6 +733,10 @@ th, td {
 }
 
 .bp-container form{
+    margin: 0;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
     display: grid;
 }
 
@@ -734,10 +792,47 @@ th, td {
     }
 }
 
+.build-title, .build-subclass, .build-class, .build-type, .build-difficulty, .build-expansion {
+    color: white;
+    text-transform: capitalize;
+}
+
+.build-subclass.void {
+    color: #7544AD;
+}
+
+.build-subclass.solar{
+    color: #CA6C47
+}
+
+.build-subclass.arc{
+    color: #69A1EB;
+}
+
+.build-subclass.stasis{
+    color: #2D42AD;
+}
+
+.build-subclass.strand{
+    color: #5FA770
+}
+
+.build-subclass.prismatic{
+    color: rgb(233, 134, 195)
+}
+
+.build-details-form{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    margin: 0;
+}
 
 /* FOOTER */
 footer{
     height: 10vh;
+    min-height: 10vh;
     width: 100%;
     position: relative;
     margin-top: auto;

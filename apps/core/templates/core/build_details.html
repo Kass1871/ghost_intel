@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Build Details{% endblock title %}
+
+{% block main %}
+    <div class="bp-dets-container">
+        <form method="post" class="build-details-form">
+            <div>
+                {% csrf_token %}
+                {{build_form.non_field_errors}}
+            </div>
+            <div class="build-dets-left">
+                <input name="title" value="{{ build_form.title.value|default_if_none:'' }}">
+                <textarea name="description">{{ build_form.description.value|default_if_none:'' }}</textarea>
+                <textarea name="content">{{ build_form.content.value|default_if_none:'' }}</textarea>
+            </div>
+            <div class="build-dets-right">
+                <label for="build_class">Class</label>
+                <select name="build_class" id="build_class" {% if not can_edit %}disabled{% endif %}>
+                    {% for value, label in build.CLASSES %}
+                        <option value="{{ value }}" {% if build_form.build_class.value == value %}selected{% endif %}>
+                            {{ label }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <label for="subclass">Subclass</label>
+                <select name="subclass" id="subclass" {% if not can_edit %}disabled{% endif %}>
+                    {% for value, label in build.SUBCLASSES %}
+                        <option value="{{value}}" {% if build_form.subclass.value == value %}selected{% endif %}>{{label}}</option>
+                    {% endfor %}
+                </select>
+                <label for="build_type">Type</label>
+                <select name="build_type" id="build_type" {% if not can_edit %}disabled{% endif %}>
+                    {% for value, label in build.BUILD_TYPES %}
+                        <option value="{{value}}" {% if build_form.build_type.value == value %}selected{% endif %}>{{label}}</option>
+                    {% endfor %}
+                </select>
+                <label for="difficulty">Difficulty</label>
+                <select name="difficulty" id="difficulty" {% if not can_edit %}disabled{% endif %}>
+                    {% for value, label in build.DIFFICULTY_CHOICES %}
+                        <option value="{{value}}" {% if build_form.difficulty.value == value %}selected{% endif %}>{{label}}</option>
+                    {% endfor %}
+                </select>
+                <label for="statsPriority">Stats priority</label>
+                <input class="detail-type" id="statsPriority" type="text" name="statsPriority" value="{{ build_form.statsPriority.value|default_if_none:'' }}" {% if not can_edit %}readonly{% endif %}>
+                <label for="expansion">Expansion</label>
+                <input class="detail-type" id="expansion" type="text" name="expansion" value="{{ build_form.expansion.value|default_if_none:'' }}" {% if not can_edit %}readonly{% endif %}>
+                <h3 class="details-header">Armor Modificators</h3>
+                <div class="bp-armor-grid">
+                    <input type="text" name="armor_helmet" placeholder="Helmet mods"
+                    value="{{ build.armorMods.helmet|join:', ' }}">
+                    <input type="text" name="armor_arms" placeholder="Arms mods"
+                    value="{{ build.armorMods.arms|join:', ' }}">
+                    <input type="text" name="armor_chest" placeholder="Chest mods"
+                    value="{{ build.armorMods.chest|join:', ' }}">
+                    <input type="text" name="armor_legs" placeholder="Legs mods"
+                    value="{{ build.armorMods.legs|join:', ' }}">
+                    <input type="text" name="armor_class_item" placeholder="Class item mods"
+                    value="{{ build.armorMods.class_item|join:', ' }}">
+                </div>
+
+                {% if can_edit%}
+                    <button type="submit" name="submit_build">Save</button>
+                {% endif %}
+            </div>
+            </div>
+        </form>
+    </div>
+{% endblock main %}

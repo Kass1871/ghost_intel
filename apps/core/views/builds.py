@@ -1,4 +1,5 @@
 ﻿import uuid
+import json
 
 from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect, get_object_or_404
@@ -26,14 +27,13 @@ def builds_view(request):
             'expansion': request.POST.get('expansion')
         }
         armor_mods = {
-            "helmet": [m.strip() for m in request.POST.getlist("armor_helmet") if m.strip()],
-            "arms": [m.strip() for m in request.POST.getlist("armor_arms") if m.strip()],
-            "chest": [m.strip() for m in request.POST.getlist("armor_chest") if m.strip()],
-            "legs": [m.strip() for m in request.POST.getlist("armor_legs") if m.strip()],
-            "class_item": [m.strip() for m in request.POST.getlist("armor_class_item") if m.strip()],
+            "helmet": [m.strip() for m in request.POST.get("armor_helmet", "").split(",") if m.strip()],
+            "arms": [m.strip() for m in request.POST.get("armor_arms", "").split(",") if m.strip()],
+            "chest": [m.strip() for m in request.POST.get("armor_chest", "").split(",") if m.strip()],
+            "legs": [m.strip() for m in request.POST.get("armor_legs", "").split(",") if m.strip()],
+            "class_item": [m.strip() for m in request.POST.get("armor_class_item", "").split(",") if m.strip()],
         }
         armor_mods = {slot: mods for slot, mods in armor_mods.items() if mods}
-
         data["armorMods"] = armor_mods if armor_mods else {}
 
         try:
@@ -74,16 +74,38 @@ class BuildDetails(View):
     def get(self, request, pk):
         build = get_object_or_404(Build, pk=pk)
         build_form = BuildForm(instance=build)
+
+        is_user_owner = request.user.is_authenticated and build.author_id == request.user.id
+        is_anon_owner = (
+                not request.user.is_authenticated
+                and build.anon_edit_token is not None
+                and session_token == str(build.anon_edit_token)
+        )
+
+        can_edit = request.user.is_staff or is_user_owner or is_anon_owner
+        if not can_edit:
+            for field in build_form.fields.values():
+                field.disabled = True
+
         return render(request,
                       'core/build_details.html',
                       {'build_form': build_form,
-                       'build': build}
+                       'build': build,
+                       'can_edit': can_edit}
                     )
 
     def post(self, request, pk):
         build = get_object_or_404(Build, pk=pk)
 
         is_user_owner = request.user.is_authenticated and build.author_id == request.user.id
+
+        post_data = request.POST.copy()
+        post_data.setdefault("slug", build.slug)
+
+        required_fields = ['build_class', 'subclass', 'build_type', 'difficulty']
+        for field in required_fields:
+            if field not in post_data:
+                post_data[field] = getattr(build, field)
 
         anon_tokens = request.session.get("anon_build_tokens", {})
         session_token = anon_tokens.get(str(build.id))
@@ -92,20 +114,24 @@ class BuildDetails(View):
                 and build.anon_edit_token is not None
                 and session_token == str(build.anon_edit_token)
         )
+        can_edit = request.user.is_staff or is_user_owner or is_anon_owner
 
-        if not (is_user_owner or is_anon_owner):
+        if not (is_user_owner or is_anon_owner or can_edit):
             return(redirect('builds'))
 
-        build_form = BuildForm(request.POST, instance=build)
+        if request.POST.get('delete'):
+            build.delete()
+            return redirect('builds')
+
+        build_form = BuildForm(post_data, instance=build)
         armor_mods = {
-            "helmet": [m.strip() for m in request.POST.getlist("armor_helmet") if m.strip()],
-            "arms": [m.strip() for m in request.POST.getlist("armor_arms") if m.strip()],
-            "chest": [m.strip() for m in request.POST.getlist("armor_chest") if m.strip()],
-            "legs": [m.strip() for m in request.POST.getlist("armor_legs") if m.strip()],
-            "class_item": [m.strip() for m in request.POST.getlist("armor_class_item") if m.strip()],
+            "helmet": [m.strip() for m in request.POST.get("armor_helmet", "").split(",") if m.strip()],
+            "arms": [m.strip() for m in request.POST.get("armor_arms", "").split(",") if m.strip()],
+            "chest": [m.strip() for m in request.POST.get("armor_chest", "").split(",") if m.strip()],
+            "legs": [m.strip() for m in request.POST.get("armor_legs", "").split(",") if m.strip()],
+            "class_item": [m.strip() for m in request.POST.get("armor_class_item", "").split(",") if m.strip()],
         }
         armor_mods = {slot: mods for slot, mods in armor_mods.items() if mods}
-        build_form['armorMods'] = armor_mods if armor_mods else {}
 
         if build_form.is_valid():
             build = build_form.save(commit=False)
@@ -117,4 +143,6 @@ class BuildDetails(View):
                       'core/build_details.html',
                       {"build_form": build_form,
                        'build': build,
-                       'errors': build_form.errors})
+                       'errors': build_form.errors,
+                       'can_edit': can_edit,
+                       'is_user_owner': is_user_owner})
